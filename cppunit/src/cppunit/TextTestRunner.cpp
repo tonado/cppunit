@@ -6,27 +6,14 @@
 
 namespace CppUnit {
 
-/** Constructs a test runner with the specified TestResult.
- *
- * A TextTestRunner owns a TextTestResult. It can be accessed 
- * anytime using result(). If you run the test more than once,
- * remember to call result()->reset() before each run.
- *
- * \param result TextTestResult used by the test runner. If none
- *               is specified then a default TextTestResult is
- *               instanciated.
- */
-TextTestRunner::TextTestRunner( TextTestResult *result ) :
-    m_result( result == 0 ? new TextTestResult() :
-                            result ),
-    m_suite( new TestSuite( "All Tests" ) )
+TextTestRunner::TextTestRunner()
 {
+  m_suite = new TestSuite( "All Tests" );
 }
 
 
 TextTestRunner::~TextTestRunner()
 {
-  delete m_result;
   delete m_suite;
 }
 
@@ -48,37 +35,36 @@ TextTestRunner::addTest( Test *test )
  * \param testName Name of the test case to run. If an empty is given, then
  *                 all added test are run. The name must be the name of
  *                 of an added test.
- * \param wait if \c true then the user must press the RETURN key 
+ * \param doWait if \c true then the user must press the RETURN key 
  *               before the run() method exit.
- * \param printResult if \c true (default) then the test result are printed
- *                    on the standard output.
- * \return \c true is the test was successful, \c false if the test
- *         failed or was not found.
  */
-bool
+
+void 
 TextTestRunner::run( std::string testName,
-                     bool doWait,
-                     bool doPrintResult )
+                     bool doWait )
 {
   runTestByName( testName );
-  printResult( doPrintResult );
   wait( doWait );
-  return m_result->wasSuccessful();
 }
 
 
-bool
+void 
 TextTestRunner::runTestByName( std::string testName )
 {
   if ( testName.empty() )
-    return runTest( m_suite );
-
-  Test *test = findTestByName( testName );
-  if ( test != NULL )
-    return runTest( test );
-
-  std::cout << "Test " << testName << " not found." << std::endl;
-  return false;
+  {
+    runTest( m_suite );
+  }
+  else
+  { 
+    Test *test = findTestByName( testName );
+    if ( test != NULL )
+      runTest( test );
+    else
+    {
+      std::cout << "Test " << testName << " not found." << std::endl;
+    }
+  }
 }
 
 
@@ -90,15 +76,6 @@ TextTestRunner::wait( bool doWait )
     std::cout << "<RETURN> to continue" << std::endl;
     std::cin.get ();
   }
-}
-
-
-void 
-TextTestRunner::printResult( bool doPrintResult )
-{
-  std::cout << std::endl;
-  if ( doPrintResult )
-    std::cout << *m_result << std::endl;
 }
 
 
@@ -117,18 +94,12 @@ TextTestRunner::findTestByName( std::string name ) const
 }
 
 
-bool
+void 
 TextTestRunner::runTest( Test *test )
 {
-  test->run( m_result );
-  return m_result->wasSuccessful();
-}
-
-
-TextTestResult *
-TextTestRunner::result()
-{
-  return m_result;
+  TextTestResult result;
+  test->run( &result );
+  std::cout << result << std::endl;
 }
 
 

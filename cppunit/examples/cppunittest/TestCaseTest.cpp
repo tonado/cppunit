@@ -1,4 +1,3 @@
-#include "CoreSuite.h"
 #include "TestCaseTest.h"
 #include "FailingTestCase.h"
 #include <cppunit/TestResult.h>
@@ -8,8 +7,7 @@
    tests need to be added to check the other aspect of TestCase.
  */
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestCaseTest,
-                                       CppUnitTest::coreSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestCaseTest );
 
 
 TestCaseTest::TestCaseTest()

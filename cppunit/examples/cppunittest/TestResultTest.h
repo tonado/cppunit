@@ -27,6 +27,7 @@ class TestResultTest : public CppUnit::TestCase,
   CPPUNIT_TEST( testSynchronizationRunTests );
   CPPUNIT_TEST( testSynchronizationTestErrors );
   CPPUNIT_TEST( testSynchronizationTestFailures );
+  CPPUNIT_TEST( testSynchronizationErrors );
   CPPUNIT_TEST( testSynchronizationFailures );
   CPPUNIT_TEST( testSynchronizationWasSuccessful );
   CPPUNIT_TEST( testSynchronizationShouldStop );
@@ -81,8 +82,7 @@ private:
 
   void checkFailure( CppUnit::TestFailure *failure,
                      std::string expectedMessage,
-                     CppUnit::Test *expectedTest,
-                     bool expectedIsError );
+                     CppUnit::Test *expectedTest );
 
   void checkWasSuccessful( bool shouldBeSuccessful );
 

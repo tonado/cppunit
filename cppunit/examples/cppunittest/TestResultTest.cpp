@@ -1,4 +1,3 @@
-#include "CoreSuite.h"
 #include "TestResultTest.h"
 #include <cppunit/TestResult.h>
 
@@ -9,8 +8,7 @@
  */
 
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestResultTest,
-                                       CppUnitTest::coreSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestResultTest );
 
 
 TestResultTest::TestResultTest()
@@ -70,14 +68,12 @@ TestResultTest::testAddTwoErrors()
   std::string errorMessage2( "Second Error" );
   m_result->addError( m_test2, new CppUnit::Exception( errorMessage2 ) );
   checkResult( 0, 2, 0 );
-  checkFailure( m_result->failures()[0],
+  checkFailure( m_result->errors()[0],
                 errorMessage1,
-                m_test,
-                true );
-  checkFailure( m_result->failures()[1],
+                m_test );
+  checkFailure( m_result->errors()[1],
                 errorMessage2,
-                m_test2,
-                true );
+                m_test2 );
 }
 
 
@@ -92,12 +88,10 @@ TestResultTest::testAddTwoFailures()
   checkResult( 2, 0, 0 );
   checkFailure( m_result->failures()[0],
                 errorMessage1,
-                m_test,
-                false );
+                m_test );
   checkFailure( m_result->failures()[1],
                 errorMessage2,
-                m_test2,
-                false );
+                m_test2 );
 }
 
 
@@ -219,6 +213,14 @@ TestResultTest::testSynchronizationTestFailures()
 
 
 void 
+TestResultTest::testSynchronizationErrors()
+{
+  m_synchronizedResult->errors();
+  checkSynchronization();
+}
+
+
+void 
 TestResultTest::testSynchronizationFailures()
 {
   m_synchronizedResult->failures();
@@ -258,21 +260,17 @@ TestResultTest::checkResult( int failures,
   CPPUNIT_ASSERT_EQUAL( testsRun, m_result->runTests() );
   CPPUNIT_ASSERT_EQUAL( errors, m_result->testErrors() );
   CPPUNIT_ASSERT_EQUAL( failures, m_result->testFailures() );
-  CPPUNIT_ASSERT_EQUAL( errors + failures, 
-                        m_result->testFailuresTotal() );
 }
 
 
 void
 TestResultTest::checkFailure( CppUnit::TestFailure *failure,
                               std::string expectedMessage,
-                              CppUnit::Test *expectedTest,
-                              bool expectedIsError )
+                              CppUnit::Test *expectedTest )
 {
   std::string actualMessage( failure->thrownException()->what() );
   CPPUNIT_ASSERT_EQUAL( expectedMessage, actualMessage );
   CPPUNIT_ASSERT_EQUAL( expectedTest, failure->failedTest() );
-  CPPUNIT_ASSERT_EQUAL( expectedIsError, failure->isError() );
 }
 
 

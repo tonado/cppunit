@@ -8,7 +8,6 @@ namespace CppUnit {
 
 class Test;
 class TestSuite;
-class TextTestResult;
 
 /**
  * A text mode test runner.
@@ -31,26 +30,21 @@ class TextTestResult;
 class TextTestRunner
 {
 public:
-  TextTestRunner( TextTestResult *result =0 );
-  virtual ~TextTestRunner();
+    TextTestRunner();
+    virtual ~TextTestRunner();
 
-  bool run( std::string testName ="",
-            bool wait = false,
-            bool printResult = true );
+    void run( std::string testName ="",
+              bool wait = false );
 
-  void addTest( Test *test );
-
-  TextTestResult *result();
+    void addTest( Test *test );
 
 protected:
-  bool runTest( Test *test );
-  bool runTestByName( std::string testName );
-  void wait( bool doWait );
-  void printResult( bool doPrintResult );
+    void runTest( Test *test );
+    void runTestByName( std::string testName );
+    void wait( bool doWait );
 
-  Test *findTestByName( std::string name ) const;
-  TestSuite *m_suite;
-  TextTestResult *m_result;
+    Test *findTestByName( std::string name ) const;
+    TestSuite *m_suite;
 };
 
 }  // namespace CppUnit

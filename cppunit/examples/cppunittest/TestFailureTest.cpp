@@ -1,11 +1,9 @@
-#include "CoreSuite.h"
 #include "TestFailureTest.h"
 #include <cppunit/TestFailure.h>
 #include <cppunit/Exception.h>
 
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestFailureTest,
-                                       CppUnitTest::coreSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestFailureTest );
 
 
 TestFailureTest::TestFailureTest()
@@ -36,17 +34,7 @@ TestFailureTest::testConstructorAndGetters()
 {
   CppUnit::TestCase test;
   CppUnit::Exception *error = new ObservedException( this );
-  checkTestFailure( &test, error, false );
-  CPPUNIT_ASSERT( m_exceptionDestroyed );
-}
-
-
-void 
-TestFailureTest::testConstructorAndGettersForError()
-{
-  CppUnit::TestCase test;
-  CppUnit::Exception *error = new ObservedException( this );
-  checkTestFailure( &test, error, true );
+  checkTestFailure( &test, error );
   CPPUNIT_ASSERT( m_exceptionDestroyed );
 }
 
@@ -60,11 +48,9 @@ TestFailureTest::exceptionDestroyed()
 
 void 
 TestFailureTest::checkTestFailure( CppUnit::Test *test, 
-                                   CppUnit::Exception *error,
-                                   bool isError )
+                                   CppUnit::Exception *error )
 {
-  CppUnit::TestFailure failure( test, error, isError );
+  CppUnit::TestFailure failure( test, error );
   CPPUNIT_ASSERT_EQUAL( test, failure.failedTest() );
   CPPUNIT_ASSERT_EQUAL( error, failure.thrownException() );
-  CPPUNIT_ASSERT_EQUAL( isError, failure.isError() );
 }

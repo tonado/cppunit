@@ -69,20 +69,7 @@ namespace CppUnit {
           addTest( test );
       }
 
-      template<typename ExceptionType>
-      void addTestCallerForException( std::string methodName, 
-                                      TestMethod testMethod, 
-                                      Fixture *fixture,
-                                      ExceptionType *dummyPointer )
-      {
-          Test *test = new TestCaller<Fixture,ExceptionType>( 
-                                       makeTestName( methodName ), 
-                                       testMethod,
-                                       fixture);
-          addTest( test );
-      }
-
-    
+    protected:
       std::string makeTestName( const std::string &methodName )
       {
         return m_suite->getName() + "." + methodName;

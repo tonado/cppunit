@@ -1,10 +1,8 @@
-#include "ExtensionSuite.h"
 #include "OrthodoxTest.h"
 #include <cppunit/extensions/Orthodox.h>
 #include <cppunit/TestResult.h>
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( OrthodoxTest,
-                                       CppUnitTest::extensionSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( OrthodoxTest );
 
 OrthodoxTest::OrthodoxTest()
 {

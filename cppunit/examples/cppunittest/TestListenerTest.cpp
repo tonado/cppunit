@@ -1,12 +1,10 @@
-#include "CoreSuite.h"
-#include "MockTestListener.h"
 #include "TestListenerTest.h"
 #include <cppunit/extensions/TestSuiteBuilder.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestResult.h>
+#include "MockTestListener.h"
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestListenerTest,
-                                       CppUnitTest::coreSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestListenerTest );
 
 
 TestListenerTest::TestListenerTest() : 
@@ -66,14 +64,21 @@ TestListenerTest::tearDown()
 
 
 void 
-TestListenerTest::addFailure( CppUnit::TestFailure *failure )
+TestListenerTest::addError( CppUnit::Test *test, CppUnit::Exception *e )
 {
-  m_listenerTest = failure->failedTest();
-  m_listenerError = failure->thrownException();
-  m_listenerCallbackType = failure->isError() ? onAddError : 
-                                                onAddFailure;
+  m_listenerTest = test;
+  m_listenerError = e;
+  m_listenerCallbackType = onAddError;
 }
 
+
+void 
+TestListenerTest::addFailure( CppUnit::Test *test, CppUnit::Exception *e )
+{
+  m_listenerTest = test;
+  m_listenerError = e;
+  m_listenerCallbackType = onAddFailure;
+}
 
 void 
 TestListenerTest::startTest( CppUnit::Test *test )

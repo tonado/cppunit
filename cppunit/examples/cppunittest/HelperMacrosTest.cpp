@@ -1,6 +1,4 @@
-#include "FailureException.h"
 #include "HelperMacrosTest.h"
-#include "HelperSuite.h"
 #include "SubclassedTestCase.h"
 #include <cppunit/TestResult.h>
 #include <memory>
@@ -9,59 +7,8 @@
  - no unit test for CPPUNIT_TEST_SUITE_REGISTRATION...
  */
 
-class FailTestCase : public CppUnit::TestCase
-{
-  CPPUNIT_TEST_SUITE( FailTestCase );
-  CPPUNIT_TEST_FAIL( testFail );
-  CPPUNIT_TEST_SUITE_END();
-public:
-  void testFail()
-  {
-    CPPUNIT_ASSERT_MESSAGE( "Failure", false );
-  }
-};
 
-
-class FailToFailTestCase : public CppUnit::TestCase
-{
-  CPPUNIT_TEST_SUITE( FailToFailTestCase );
-  CPPUNIT_TEST_FAIL( testFailToFail );
-  CPPUNIT_TEST_SUITE_END();
-public:
-  void testFailToFail()
-  {
-  }
-};
-
-
-class ExceptionTestCase : public CppUnit::TestCase
-{
-  CPPUNIT_TEST_SUITE( ExceptionTestCase );
-  CPPUNIT_TEST_EXCEPTION( testException, FailureException );
-  CPPUNIT_TEST_SUITE_END();
-public:
-  void testException()
-  {
-    throw FailureException();
-  }
-};
-
-
-class ExceptionNotCaughtTestCase : public CppUnit::TestCase
-{
-  CPPUNIT_TEST_SUITE( ExceptionNotCaughtTestCase );
-  CPPUNIT_TEST_EXCEPTION( testExceptionNotCaught, FailureException );
-  CPPUNIT_TEST_SUITE_END();
-public:
-  void testExceptionNotCaught()
-  {
-  }
-};
-
-
-
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( HelperMacrosTest, 
-                                       CppUnitTest::helperSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( HelperMacrosTest );
 
 
 HelperMacrosTest::HelperMacrosTest() : 
@@ -108,42 +55,6 @@ HelperMacrosTest::testSubclassing()
 
   suite->run( m_result );
   checkTestResult( 1,0,2 );
-}
-
-
-void 
-HelperMacrosTest::testFail()
-{
-  std::auto_ptr<CppUnit::TestSuite> suite( FailTestCase::suite() );
-  suite->run( m_result );
-  checkTestResult( 0,0,1 );
-}
-
-
-void 
-HelperMacrosTest::testFailToFail()
-{
-  std::auto_ptr<CppUnit::TestSuite> suite( FailToFailTestCase::suite() );
-  suite->run( m_result );
-  checkTestResult( 1,0,1 );
-}
-
-
-void 
-HelperMacrosTest::testException()
-{
-  std::auto_ptr<CppUnit::TestSuite> suite( ExceptionTestCase::suite() );
-  suite->run( m_result );
-  checkTestResult( 0,0,1 );
-}
-
-
-void 
-HelperMacrosTest::testExceptionNotCaught()
-{
-  std::auto_ptr<CppUnit::TestSuite> suite( ExceptionNotCaughtTestCase::suite() );
-  suite->run( m_result );
-  checkTestResult( 1,0,1 );
 }
 
 

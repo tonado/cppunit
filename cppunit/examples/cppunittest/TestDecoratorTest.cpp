@@ -1,11 +1,9 @@
-#include "ExtensionSuite.h"
-#include "FailingTestCase.h"
 #include "TestDecoratorTest.h"
+#include "FailingTestCase.h"
 #include <cppunit/TestResult.h>
 
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestDecoratorTest,
-                                       CppUnitTest::extensionSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestDecoratorTest );
 
 
 TestDecoratorTest::TestDecoratorTest()

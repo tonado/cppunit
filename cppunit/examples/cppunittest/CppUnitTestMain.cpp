@@ -1,29 +1,14 @@
-#include <cppunit/extensions/TestFactoryRegistry.h>
-#include <cppunit/CompilerOutputter.h>
-#include <cppunit/TextTestResult.h>
 #include <cppunit/TextTestRunner.h>
-#include "CppUnitTestSuite.h"
-
+#include <cppunit/extensions/TestFactoryRegistry.h>
 
 int 
 main( int argc, char* argv[] )
 {
-  bool selfTest = (argc > 1)  &&  
-                  (std::string("-selftest") == argv[1]);
-
   CppUnit::TextTestRunner runner;
-  runner.addTest( CppUnitTest::suite() );
+  runner.addTest( CppUnit::TestFactoryRegistry::getRegistry().makeTest() );
 
-  bool wasSucessful = runner.run( "", false, !selfTest );
-  if ( selfTest )
-  {  
-    CppUnit::CompilerOutputter *outputter = 
-        CppUnit::CompilerOutputter::defaultOutputter( runner.result(),
-                                                      std::cerr );
-    outputter->write();
-    delete outputter;
-  }
+  runner.run();
 
-  return wasSucessful ? 0 : 1;
+  return 0;
 }
 

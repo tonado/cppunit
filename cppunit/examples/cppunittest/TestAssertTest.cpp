@@ -1,6 +1,4 @@
-#include "CoreSuite.h"
 #include "TestAssertTest.h"
-#include <algorithm>
 
 /*
  Note:
@@ -12,8 +10,7 @@
  */
 
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestAssertTest,
-                                       CppUnitTest::coreSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestAssertTest );
 
 
 TestAssertTest::TestAssertTest()
@@ -37,7 +34,6 @@ TestAssertTest::tearDown()
 {
 }
 
-
 void 
 TestAssertTest::testAssertTrue()
 {
@@ -48,7 +44,17 @@ TestAssertTest::testAssertTrue()
 void 
 TestAssertTest::testAssertFalse()
 {
-  CPPUNIT_ASSERT( false );
+  bool exceptionCatched = false;
+  try
+  {
+    CPPUNIT_ASSERT( false );
+  }
+  catch( CppUnit::Exception & )
+  {
+    exceptionCatched = true; // ok, we were expecting an exception.
+  }
+
+  CPPUNIT_ASSERT( exceptionCatched );
 }
 
 
@@ -58,8 +64,8 @@ static int foo() { return 1; }
 void 
 TestAssertTest::testAssertEqual()
 {
-  CPPUNIT_ASSERT_EQUAL( 1, 1 );
-  CPPUNIT_ASSERT_EQUAL( 1, foo() );
+    CPPUNIT_ASSERT_EQUAL(1,1);
+    CPPUNIT_ASSERT_EQUAL( 1, foo() );
 }
 
 
@@ -73,19 +79,19 @@ TestAssertTest::testAssertMessageTrue()
 void 
 TestAssertTest::testAssertMessageFalse()
 {
-  bool exceptionCaught = false;
+  bool exceptionCatched = false;
   std::string message( "This test message should not be seen" );
   try
   {
-    CPPUNIT_ASSERT_MESSAGE( message, 2==3 );
+    CPPUNIT_ASSERT_MESSAGE( message, false );
   }
   catch( CppUnit::Exception &e )
   {
-    exceptionCaught = true; // ok, we were expecting an exception.
-    checkMessageContains( &e, message );
+    CPPUNIT_ASSERT_EQUAL( message, std::string( e.what() ) );
+    exceptionCatched = true; // ok, we were expecting an exception.
   }
 
-  CPPUNIT_ASSERT( exceptionCaught );
+  CPPUNIT_ASSERT( exceptionCatched );
 }
 
 
@@ -98,16 +104,29 @@ TestAssertTest::testAssertDoubleEquals()
 
 
 void 
-TestAssertTest::testAssertDoubleNotEquals1()
+TestAssertTest::testAssertDoubleNotEquals()
 {
-  CPPUNIT_ASSERT_DOUBLES_EQUAL( 1.1, 1.2, 0.09 );
+  checkDoubleNotEquals( 1.1, 1.2, 0.09 );
+  checkDoubleNotEquals( 1.2, 1.1, 0.09 );
 }
 
 
 void 
-TestAssertTest::testAssertDoubleNotEquals2()
+TestAssertTest::checkDoubleNotEquals( double expected, 
+                                      double actual, 
+                                      double delta )
 {
-  CPPUNIT_ASSERT_DOUBLES_EQUAL( 1.2, 1.1, 0.09 );
+  bool exceptionCatched = false;
+  try
+  {
+    CPPUNIT_ASSERT_DOUBLES_EQUAL( expected, actual, delta );
+  }
+  catch( CppUnit::Exception & )
+  {
+    exceptionCatched = true; // ok, we were expecting an exception.
+  }
+
+  CPPUNIT_ASSERT( exceptionCatched );
 }
 
 
@@ -121,35 +140,15 @@ TestAssertTest::testAssertLongEquals()
 void 
 TestAssertTest::testAssertLongNotEquals()
 {
-  CPPUNIT_ASSERT_EQUAL( 1, 2 );
-}
-
-
-void 
-TestAssertTest::testFail()
-{
-  bool exceptionCaught = false;
-  std::string failure( "FailureMessage" );
+  bool exceptionCatched = false;
   try
   {
-    CPPUNIT_FAIL( failure );
+    CPPUNIT_ASSERT_EQUAL( 1, 2 );
   }
-  catch( CppUnit::Exception &e )
+  catch( CppUnit::Exception & )
   {
-    exceptionCaught = true;
-    checkMessageContains( &e, failure );
+    exceptionCatched = true; // ok, we were expecting an exception.
   }
-  CPPUNIT_ASSERT( exceptionCaught );
-}
 
-
-void 
-TestAssertTest::checkMessageContains( CppUnit::Exception *e,
-                                      std::string expected )
-{
-  std::string actual = e->what();
-  CPPUNIT_ASSERT_MESSAGE( "Expected message not found: " + expected +
-                          ", was: " + actual,
-      std::search( actual.begin(), actual.end(), 
-                   expected.begin(), expected.end() ) != actual.end() );
+  CPPUNIT_ASSERT( exceptionCatched );
 }

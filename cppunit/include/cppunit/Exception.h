@@ -1,8 +1,6 @@
 #ifndef CPPUNIT_EXCEPTION_H
 #define CPPUNIT_EXCEPTION_H
 
-#include <cppunit/Portability.h>
-#include <cppunit/SourceLine.h>
 #include <exception>
 #include <string>
 
@@ -32,14 +30,8 @@ public:
 
 
     Exception( std::string  message = "", 
-	       SourceLine sourceLine = SourceLine() );
-
-#ifdef CPPUNIT_ENABLE_SOURCELINE_DEPRECATED
-    Exception( std::string  message, 
-	       long lineNumber, 
-	       std::string fileName );
-#endif
-
+	       long lineNumber = UNKNOWNLINENUMBER, 
+	       std::string fileName = UNKNOWNFILENAME);
     Exception (const Exception& other);
 
     virtual ~Exception () throw();
@@ -48,15 +40,11 @@ public:
 
     const char *what() const throw ();
 
-    SourceLine sourceLine() const;
-
-#ifdef CPPUNIT_ENABLE_SOURCELINE_DEPRECATED
-    long lineNumber() const;
-    std::string fileName() const;
+    long lineNumber ();
+    std::string fileName ();
 
     static const std::string UNKNOWNFILENAME;
     static const long UNKNOWNLINENUMBER;
-#endif
 
     virtual Exception *clone() const;
     
@@ -70,7 +58,8 @@ private:
     typedef std::exception SuperClass;
 
     std::string m_message;
-    SourceLine m_sourceLine;
+    long m_lineNumber;
+    std::string m_fileName;
 };
 
 

@@ -1,33 +1,33 @@
-#include <cppunit/Exception.h>
-#include <cppunit/NotEqualException.h>
-#include <cppunit/Test.h>
-#include <cppunit/TextTestResult.h>
 #include <iostream>
-
+#include "cppunit/TextTestResult.h"
+#include "cppunit/Exception.h"
+#include "cppunit/NotEqualException.h"
+#include "cppunit/Test.h"
 
 namespace CppUnit {
 
-
-void 
-TextTestResult::addError( Test *test, 
-                          Exception *e )
-{
-  TestResult::addError( test, e );
-  std::cerr << "E";
+std::ostream& 
+operator<< (std::ostream& stream, TextTestResult& result)
+{ 
+  result.print (stream); return stream; 
 }
 
-
 void 
-TextTestResult::addFailure( Test *test, 
-                            Exception *e )
+TextTestResult::addError (Test *test, Exception *e)
 {
-  TestResult::addFailure (test, e);
-  std::cerr << "F";
+    TestResult::addError (test, e);
+    std::cerr << "E";
 }
 
+void 
+TextTestResult::addFailure (Test *test, Exception *e)
+{
+    TestResult::addFailure (test, e);
+    std::cerr << "F";
+}
 
 void 
-TextTestResult::startTest( Test *test )
+TextTestResult::startTest (Test *test)
 {
   TestResult::startTest (test);
   std::cerr << ".";
@@ -35,146 +35,104 @@ TextTestResult::startTest( Test *test )
 
 
 void 
-TextTestResult::printFailures( std::ostream &stream )
+TextTestResult::printErrors (std::ostream& stream)
 {
-  TestFailures::const_iterator itFailure = failures().begin();
-  int failureNumber = 1;
-  while ( itFailure != failures().end() ) 
-  {
-    stream  <<  std::endl;
-    printFailure( *itFailure++, failureNumber++, stream );
-  }
-}
+    if ( testErrors() == 0 )
+	return;
 
+    if (testErrors () == 1)
+	stream << "There was 1 error: " << std::endl;
+    else
+	stream << "There were " << testErrors () << " errors: " << std::endl;
 
-void 
-TextTestResult::printFailure( TestFailure *failure,
-                              int failureNumber,
-                              std::ostream &stream )
-{
-  printFailureListMark( failureNumber, stream );
-  stream << ' ';
-  printFailureTestName( failure, stream );
-  stream << ' ';
-  printFailureType( failure, stream );
-  stream << ' ';
-  printFailureLocation( failure->sourceLine(), stream );
-  stream << std::endl;
-  printFailureDetail( failure->thrownException(), stream );
-  stream << std::endl;
-}
+    int i = 1;
 
+    for (std::vector<TestFailure *>::iterator it = errors ().begin (); it != errors ().end (); ++it) {
+	TestFailure* failure = *it;
+	Exception* e = failure->thrownException ();
 
-void 
-TextTestResult::printFailureListMark( int failureNumber,
-                                      std::ostream &stream )
-{
-  stream << failureNumber << ")";
-}
-
-
-void 
-TextTestResult::printFailureTestName( TestFailure *failure,
-                                      std::ostream &stream )
-{
-  stream << "test: " << failure->failedTest()->getName();
-}
-
-
-void 
-TextTestResult::printFailureType( TestFailure *failure,
-                                  std::ostream &stream )
-{
-  stream << "("
-         << (failure->isError() ? "E" : "F")
-         << ")";
-}
-
-
-void 
-TextTestResult::printFailureLocation( SourceLine sourceLine,
-                                      std::ostream &stream )
-{
-  if ( !sourceLine.isValid() )
-    return;
-
-  stream << "line: " << sourceLine.lineNumber()
-         << ' ' << sourceLine.fileName();
-}
-
-
-void 
-TextTestResult::printFailureDetail( Exception *thrownException,
-                                    std::ostream &stream )
-{
-  if ( thrownException->isInstanceOf( NotEqualException::type() ) )
-  {
-    NotEqualException *e = (NotEqualException*)thrownException;
-    stream << "expected: " << e->expectedValue() << std::endl
-           << "but was:  " << e->actualValue();
-    if ( !e->additionalMessage().empty() )
-    {
-      stream  << std::endl;
-      stream  <<  "additional message:"  <<  std::endl
-              <<  e->additionalMessage();
+	stream << i 
+	       << ")"
+	       << " test: " << failure->failedTest()->getName();
+	if ( e ) 
+	    stream << " line: " << e->lineNumber()
+		   << ' ' << e->fileName();
+	stream << " \"" << failure->thrownException()->what() << "\""
+	       << std::endl;
+	i++;
     }
-  }
-  else
-  {
-    stream << " \"" << thrownException->what() << "\"";
-  }
 }
 
 
 void 
-TextTestResult::print( std::ostream& stream ) 
+TextTestResult::printFailures (std::ostream& stream) 
 {
-  printHeader( stream );
-  stream << std::endl;
-  printFailures( stream );
+    if ( testFailures() == 0 )
+	return;
+
+    if (testFailures () == 1)
+	stream << "There was 1 failure: " << std::endl;
+    else
+	stream << "There were " << testFailures () << " failures: " << std::endl;
+
+    int i = 1;
+
+    for (std::vector<TestFailure *>::iterator it = failures ().begin (); it != failures ().end (); ++it) {
+	TestFailure* failure = *it;
+	Exception* e = failure->thrownException();
+
+	stream << i 
+	       << ")"
+	       << " test: " << failure->failedTest()->getName();
+	if ( e ) 
+	    stream << " line: " << e->lineNumber()
+		   << ' ' << e->fileName();
+
+	if ( failure->thrownException()->isInstanceOf( NotEqualException::type() ) )
+        {
+	    NotEqualException *e = (NotEqualException*)failure->thrownException();
+	    stream << std::endl 
+		   << "expected: " << e->expectedValue() << std::endl
+		   << "but was:  " << e->actualValue();
+	} 
+	else 
+        {
+	    stream << " \"" << failure->thrownException ()->what () << "\"";
+	}
+
+	stream << std::endl;
+	i++;
+    }
 }
 
 
 void 
-TextTestResult::printHeader( std::ostream &stream )
+TextTestResult::print (std::ostream& stream) 
 {
-  if (wasSuccessful ())
-    stream << std::endl << "OK (" << runTests () << " tests)" 
-           << std::endl;
-  else
-  {
-    stream << std::endl;
-    printFailureWarning( stream );
-    printStatistics( stream );
-  }
+    printHeader (stream);
+    printErrors (stream);
+    printFailures (stream);
+
 }
 
 
 void 
-TextTestResult::printFailureWarning( std::ostream &stream )
+TextTestResult::printHeader (std::ostream& stream)
 {
-  stream  << "!!!FAILURES!!!" << std::endl;
+    if (wasSuccessful ())
+        stream << std::endl << "OK (" << runTests () << " tests)" << std::endl;
+    else
+        stream << std::endl
+             << "!!!FAILURES!!!" << std::endl
+             << "Test Results:" << std::endl
+             << "Run:  "
+             << runTests ()
+             << "   Failures: "
+             << testFailures ()
+             << "   Errors: "
+             << testErrors ()
+             << std::endl;
+
 }
-
-
-void 
-TextTestResult::printStatistics( std::ostream &stream )
-{
-  stream  << "Test Results:" << std::endl;
-
-  stream  <<  "Run:  "  <<  runTests()
-          <<  "   Failures: "  <<  testFailures()
-          <<  "   Errors: "  <<  testErrors()
-          <<  std::endl;
-}
-
-
-std::ostream &
-operator <<( std::ostream &stream, 
-             TextTestResult &result )
-{ 
-  result.print (stream); return stream; 
-}
-
 
 } // namespace CppUnit

@@ -1,9 +1,7 @@
-#include "ExtensionSuite.h"
 #include "TestSetUpTest.h"
 #include <cppunit/TestResult.h>
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestSetUpTest,
-                                       CppUnitTest::extensionSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestSetUpTest );
 
 
 TestSetUpTest::TestSetUpTest()

@@ -1,12 +1,10 @@
-#include "CoreSuite.h"
 #include "ExceptionTest.h"
 #include <cppunit/Exception.h>
 #include <cppunit/NotEqualException.h>
 #include <memory>
 
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( ExceptionTest,
-                                       CppUnitTest::coreSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( ExceptionTest );
 
 
 ExceptionTest::ExceptionTest()
@@ -35,12 +33,14 @@ void
 ExceptionTest::testConstructor()
 {
   const std::string message( "a message" );
-  const CppUnit::SourceLine sourceLine( "dir/afile.cpp", 17 );
+  const int lineNumber = 17;
+  const std::string fileName( "dir/afile.cpp" );
   
-  CppUnit::Exception e( message, sourceLine );
+  CppUnit::Exception e( message, lineNumber, fileName  );
 
   CPPUNIT_ASSERT_EQUAL( message, std::string( e.what() ) );
-  CPPUNIT_ASSERT( sourceLine == e.sourceLine() );
+  CPPUNIT_ASSERT_EQUAL( lineNumber, int(e.lineNumber()) );
+  CPPUNIT_ASSERT_EQUAL( fileName, e.fileName() );
 }
 
 
@@ -50,15 +50,17 @@ ExceptionTest::testDefaultConstructor()
   CppUnit::Exception e;
 
   CPPUNIT_ASSERT_EQUAL( std::string(""), std::string( e.what() ) );
-  CPPUNIT_ASSERT( !e.sourceLine().isValid() );
+  CPPUNIT_ASSERT_EQUAL( CppUnit::Exception::UNKNOWNLINENUMBER, 
+                        e.lineNumber() );
+  CPPUNIT_ASSERT_EQUAL( CppUnit::Exception::UNKNOWNFILENAME, 
+                        e.fileName() );
 }
 
 
 void 
 ExceptionTest::testCopyConstructor()
 {
-  CppUnit::SourceLine sourceLine( "fileName.cpp", 123 );
-  CppUnit::Exception e( "message", sourceLine  );
+  CppUnit::Exception e( "message", 17, "fileName.cpp"  );
   CppUnit::Exception other( e );
   checkIsSame( e, other );
 }
@@ -67,8 +69,7 @@ ExceptionTest::testCopyConstructor()
 void 
 ExceptionTest::testAssignment()
 {
-  CppUnit::SourceLine sourceLine( "fileName.cpp", 123 );
-  CppUnit::Exception e( "message", sourceLine  );
+  CppUnit::Exception e( "message", 17, "fileName.cpp"  );
   CppUnit::Exception other;
   other = e;
   checkIsSame( e, other );
@@ -78,8 +79,7 @@ ExceptionTest::testAssignment()
 void 
 ExceptionTest::testClone()
 {
-  CppUnit::SourceLine sourceLine( "fileName.cpp", 123 );
-  CppUnit::Exception e( "message", sourceLine  );
+  CppUnit::Exception e( "message", 17, "fileName.cpp"  );
   std::auto_ptr<CppUnit::Exception> other( e.clone() );
   checkIsSame( e, *other.get() );
 }
@@ -88,8 +88,7 @@ ExceptionTest::testClone()
 void 
 ExceptionTest::testIsInstanceOf()
 {
-  CppUnit::SourceLine sourceLine( "fileName.cpp", 123 );
-  CppUnit::Exception e( "message", sourceLine  );
+  CppUnit::Exception e( "message", 17, "fileName.cpp"  );
   CPPUNIT_ASSERT( e.isInstanceOf( CppUnit::Exception::type() ) );
   CPPUNIT_ASSERT( !e.isInstanceOf( CppUnit::NotEqualException::type() ) );
 }
@@ -102,5 +101,6 @@ ExceptionTest::checkIsSame( CppUnit::Exception &e,
   std::string eWhat( e.what() );
   std::string otherWhat( other.what() );
   CPPUNIT_ASSERT_EQUAL( eWhat, otherWhat );
-  CPPUNIT_ASSERT( e.sourceLine() == other.sourceLine() );
+  CPPUNIT_ASSERT_EQUAL( e.lineNumber(), other.lineNumber() );
+  CPPUNIT_ASSERT_EQUAL( e.fileName(), other.fileName() );
 }

@@ -105,9 +105,17 @@ LIB32=link.exe -lib
 # Name "cppunit - Win32 Release"
 # Name "cppunit - Win32 Debug"
 # Name "cppunit - Win32 Debug Crossplatform Setting"
-# Begin Group "extension"
+# Begin Group "extensions"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\include\cppunit\extensions\AutoRegisterSuite.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\include\cppunit\extensions\HelperMacros.h
+# End Source File
 # Begin Source File
 
 SOURCE=..\..\include\cppunit\extensions\Orthodox.h
@@ -123,26 +131,6 @@ SOURCE=..\..\include\cppunit\extensions\RepeatedTest.h
 # Begin Source File
 
 SOURCE=..\..\include\cppunit\extensions\TestDecorator.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\extensions\TestSetUp.h
-# End Source File
-# End Group
-# Begin Group "helper"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\extensions\AutoRegisterSuite.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\extensions\HelperMacros.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\TestCaller.h
 # End Source File
 # Begin Source File
 
@@ -173,16 +161,17 @@ SOURCE=.\TypeInfoHelper.cpp
 SOURCE=..\..\include\cppunit\extensions\TypeInfoHelper.h
 # End Source File
 # End Group
-# Begin Group "core"
-
-# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Asserter.cpp
+SOURCE=..\..\ChangeLog
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\include\cppunit\Asserter.h
+SOURCE="..\..\include\cppunit\config-msvc6.h"
+# End Source File
+# Begin Source File
+
+SOURCE=.\estring.h
 # End Source File
 # Begin Source File
 
@@ -202,11 +191,7 @@ SOURCE=..\..\include\cppunit\NotEqualException.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SourceLine.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\SourceLine.h
+SOURCE=..\..\include\cppunit\Portability.h
 # End Source File
 # Begin Source File
 
@@ -219,6 +204,10 @@ SOURCE=.\TestAssert.cpp
 # Begin Source File
 
 SOURCE=..\..\include\cppunit\TestAssert.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\include\cppunit\TestCaller.h
 # End Source File
 # Begin Source File
 
@@ -242,6 +231,14 @@ SOURCE=..\..\include\cppunit\TestListener.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TestRegistry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\include\cppunit\TestRegistry.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TestResult.cpp
 # End Source File
 # Begin Source File
@@ -255,19 +252,6 @@ SOURCE=.\TestSuite.cpp
 # Begin Source File
 
 SOURCE=..\..\include\cppunit\TestSuite.h
-# End Source File
-# End Group
-# Begin Group "output"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\CompilerOutputter.cpp
-# SUBTRACT CPP /YX
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\CompilerOutputter.h
 # End Source File
 # Begin Source File
 
@@ -284,43 +268,6 @@ SOURCE=.\TextTestRunner.cpp
 # Begin Source File
 
 SOURCE=..\..\include\cppunit\TextTestRunner.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\XmlOutputter.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\XmlOutputter.h
-# End Source File
-# End Group
-# Begin Group "portability"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE="..\..\include\cppunit\config-msvc6.h"
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\Portability.h
-# End Source File
-# End Group
-# Begin Source File
-
-SOURCE=..\..\ChangeLog
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\include\cppunit\Makefile.am
-# End Source File
-# Begin Source File
-
-SOURCE=.\Makefile.am
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\NEWS
 # End Source File
 # End Target
 # End Project

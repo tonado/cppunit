@@ -8,16 +8,14 @@ class TestAssertTest : public CppUnit::TestCase
 {
   CPPUNIT_TEST_SUITE( TestAssertTest );
   CPPUNIT_TEST( testAssertTrue );
-  CPPUNIT_TEST_FAIL( testAssertFalse );
+  CPPUNIT_TEST( testAssertFalse );
   CPPUNIT_TEST( testAssertEqual );
   CPPUNIT_TEST( testAssertMessageTrue );
   CPPUNIT_TEST( testAssertMessageFalse );
   CPPUNIT_TEST( testAssertDoubleEquals );
-  CPPUNIT_TEST_FAIL( testAssertDoubleNotEquals1 );
-  CPPUNIT_TEST_FAIL( testAssertDoubleNotEquals2 );
+  CPPUNIT_TEST( testAssertDoubleNotEquals );
   CPPUNIT_TEST( testAssertLongEquals );
-  CPPUNIT_TEST_FAIL( testAssertLongNotEquals );
-  CPPUNIT_TEST( testFail );
+  CPPUNIT_TEST( testAssertLongNotEquals );
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -37,13 +35,10 @@ public:
   void testAssertMessageFalse();
 
   void testAssertDoubleEquals();
-  void testAssertDoubleNotEquals1();
-  void testAssertDoubleNotEquals2();
+  void testAssertDoubleNotEquals();
 
   void testAssertLongEquals();
   void testAssertLongNotEquals();
-
-  void testFail();
 
 private:
   TestAssertTest( const TestAssertTest &copy );
@@ -52,9 +47,6 @@ private:
   void checkDoubleNotEquals( double expected, 
                              double actual, 
                              double delta );
-
-  void checkMessageContains( CppUnit::Exception *e,
-                             std::string expectedMessage );
 
 private:
 };

@@ -1,73 +1,9 @@
-	New in CppUnit 1.7.0
+	New in CppUnit 1.6.2
 	--------------------
 
-* New macros in HelperMacros.h: 
+* This is a bug-fixing release.
 
-  CPPUNIT_TEST_EXCEPTION that expect an exception of a specified type to
-  be thrown.
-
-  CPPUNIT_TEST_FAIL that expect a test to fail.
-
-  CPPUNIT_TEST_SUITE_NAMED_REGISTRATION to register a suite in a named suite.
-
-* Fail with arbitrary message: CPPUNIT_FAIL
-
-* NotEqualException constructor take an additional message (usually used to
-point out where the difference occured between the expected and actual value)
-that can be retreived with additionalMessage(). See Asserter documentation for
-an example of usage.
-
-* TextTestRunner now return a boolean indicating is the run was sucessful. You
-can also specify a TextTestResult in the constructor and access the result
-with result().
-
-* Helpers to construct your own assertion
-
-  It is now very easy to create your own assertion macro with failure
-  location.
-
-  CPPUNIT_SOURCELINE() macro have been added. It capture the failure location
-  in a SourceLine object.
-
-  Asserter namespace contains functions used to construct and throw exception
-  to report failure. See Asserter documentation for an example of usage.
-
-* TestRunner
-
-  - Qt TestRunner : a test runner for the Qt library (http://www.trolltech.com).
-    See examples/qt for an example of use.
-
-* Output
-
-  - XML output : You can dump the TestResult as an XML document using 
-  XmlOutputter. See examples/cppunittest/XmlOutputterTest.cpp for document
-  structure and usage.
-
-  - Compiler compatible output : CompilerOutputter print the result in a 
-  compiler compatible format. You can use your IDE to jump to the first 
-  failure. See examples/cppunittest/CppUniTestMain.cpp for an example of usage.
-
-* Deprecated
-
-  - Methods having fileName, lineNumber as parameter. Usually replaced by
-  a similar method that take a SourceLine parameter. Exception and
-  TestAssert are impacted.
-  
-    You must define the symbol CPPUNIT_ENABLE_SOURCELINE_DEPRECATED to enable
-  old Exception constructor, UNKNOWNFILENAME and UNKNOWNLINENUMBER, as well
-  as function defined in the TestAssert namespace. The exception construction
-  and throwing as been moved to Asserter namespace.
-
-* Compatibility break:
-  - TestListener::addError() was removed. addFailure() is used to report
-any kind of failure.
-  - TestResult::errors() was removed. Use failures() instead.
-  - TestResult::failures() now reports all kind of failures.
-  - TestResult::failures() returns a const reference.
-
-* Bug fix:
-  - test ExceptionTest.testAssignment() don't fail anymore on VC++. See FAQ
-    for detail.
+* Improved install procedure for systems that lack doxygen.
 
 
 	New in CppUnit 1.6.1

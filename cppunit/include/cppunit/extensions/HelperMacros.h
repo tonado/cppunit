@@ -164,43 +164,6 @@
                              (__ThisTestCaseType*)factory->makeTest() ) 
 
 
-/*!  Add a test which fail if the specified exception is not caught.
- *
- * Example:
- * \code
- * #include <cppunit/extensions/HelperMacros.h>
- * #include <vector>
- * class MyTest : public CppUnit::TestCase {
- *   CPPUNIT_TEST_SUITE( MyTest );
- *   CPPUNIT_TEST_EXCEPTION( testVectorAtThrow, std::invalid_argument );
- *   CPPUNIT_TEST_SUITE_END();
- * public:
- *   void testVectorAtThrow()
- *   {
- *     std::vector<int> v;
- *     v.at( 1 );     // must throw exception std::invalid_argument
- *   }
- * };
- * \endcode
- *
- * \param testMethod Name of the method of the test case to add to the suite.
- * \param ExceptionType Type of the exception that must be thrown by the test 
- *                      method.
- */
-#define CPPUNIT_TEST_EXCEPTION( testMethod, ExceptionType )             \
-      builder.addTestCallerForException( #testMethod,                   \
-                             &__ThisTestCaseType::testMethod ,          \
-                             (__ThisTestCaseType*)factory->makeTest(),  \
-                             (ExceptionType *)NULL ); 
-
-/*! Add a test which is excepted to fail.
- *
- * To use when writing test case for testing utility class.
- *
- */
-#define CPPUNIT_TEST_FAIL( testMethod ) \
-              CPPUNIT_TEST_EXCEPTION( testMethod, CppUnit::Exception )
-
 /** End declaration of the test suite.
  *
  * After this macro, member access is set to "private".
@@ -241,32 +204,11 @@
  * \param ATestCaseType Type of the test case class.
  * \warning This macro should be used only once per line of code (the line
  *          number is used to name a hidden static variable).
- * \see  CPPUNIT_TEST_SUITE, CppUnit::AutoRegisterSuite, 
- *       CppUnit::TestFactoryRegistry.
+ * \see  CPPUNIT_TEST_SUITE, CppUnit::AutoRegisterSuite.
  */
-#define CPPUNIT_TEST_SUITE_REGISTRATION( ATestCaseType )      \
-  static CppUnit::AutoRegisterSuite< ATestCaseType >          \
+#define CPPUNIT_TEST_SUITE_REGISTRATION( ATestCaseType )                     \
+  static CppUnit::AutoRegisterSuite< ATestCaseType >                    \
              __CPPUNIT_MAKE_UNIQUE_NAME(__autoRegisterSuite )
-
-
-/** Register test suite into the specified global registry suite.
- *
- * This macro declares a static variable whose construction
- * causes a test suite factory to be inserted in the global registry
- * suite of the specified name. The registry is available by calling
- * the static function CppUnit::TestFactoryRegistry::getRegistry().
- * 
- * \param ATestCaseType Type of the test case class.
- * \param suiteName Name of the global registry suite the test suite is 
- *                  registered into.
- * \warning This macro should be used only once per line of code (the line
- *          number is used to name a hidden static variable).
- * \see  CPPUNIT_TEST_SUITE, CppUnit::AutoRegisterSuite, 
- *       CppUnit::TestFactoryRegistry..
- */
-#define CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( ATestCaseType, suiteName ) \
-  static CppUnit::AutoRegisterSuite< ATestCaseType >                      \
-             __CPPUNIT_MAKE_UNIQUE_NAME(__autoRegisterSuite )(suiteName)
 
 
 // Backwards compatibility

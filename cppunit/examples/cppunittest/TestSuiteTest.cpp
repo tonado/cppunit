@@ -1,11 +1,9 @@
-#include "CoreSuite.h"
-#include "FailingTestCase.h"
 #include "TestSuiteTest.h"
+#include "FailingTestCase.h"
 #include <cppunit/TestResult.h>
 
 
-CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestSuiteTest,
-                                       CppUnitTest::coreSuiteName() );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestSuiteTest );
 
 
 TestSuiteTest::TestSuiteTest()

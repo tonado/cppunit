@@ -53,12 +53,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ../../lib/cppunit.lib /nologo /subsystem:console /machine:I386
-# Begin Special Build Tool
-TargetPath=.\Release\CppUnitTestMain.exe
-SOURCE="$(InputPath)"
-PostBuild_Desc=Self test
-PostBuild_Cmds=$(TargetPath) -selftest
-# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "CppUnitTestMain - Win32 Debug"
 
@@ -84,12 +78,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ../../lib/cppunitd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# Begin Special Build Tool
-TargetPath=.\Debug\CppUnitTestMain.exe
-SOURCE="$(InputPath)"
-PostBuild_Desc=Self test
-PostBuild_Cmds=$(TargetPath) -selftest
-# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "CppUnitTestMain - Win32 Debug Crossplatform Setting"
 
@@ -117,12 +105,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ../../lib/cppunitd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ../../lib/cppunitcd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# Begin Special Build Tool
-TargetPath=.\DebugCrossplatform\CppUnitTestMain.exe
-SOURCE="$(InputPath)"
-PostBuild_Desc=Self test
-PostBuild_Cmds=$(TargetPath) -selftest
-# End Special Build Tool
 
 !ENDIF 
 
@@ -141,19 +123,7 @@ SOURCE=.\BaseTestCase.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CoreSuite.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\CppUnitTestMain.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CppUnitTestSuite.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\CppUnitTestSuite.h
 # End Source File
 # Begin Source File
 
@@ -162,10 +132,6 @@ SOURCE=.\ExceptionTest.cpp
 # Begin Source File
 
 SOURCE=.\ExceptionTest.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ExtensionSuite.h
 # End Source File
 # Begin Source File
 
@@ -186,14 +152,6 @@ SOURCE=.\HelperMacrosTest.cpp
 # Begin Source File
 
 SOURCE=.\HelperMacrosTest.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\HelperSuite.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Makefile.am
 # End Source File
 # Begin Source File
 
@@ -218,10 +176,6 @@ SOURCE=.\OrthodoxTest.cpp
 # Begin Source File
 
 SOURCE=.\OrthodoxTest.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\OutputSuite.h
 # End Source File
 # Begin Source File
 
@@ -322,34 +276,6 @@ SOURCE=.\TrackedTestCase.cpp
 # Begin Source File
 
 SOURCE=.\TrackedTestCase.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\UnitTestToolSuite.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\XmlOutputterTest.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\XmlOutputterTest.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\XmlUniformiser.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\XmlUniformiser.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\XmlUniformiserTest.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\XmlUniformiserTest.h
 # End Source File
 # End Target
 # End Project

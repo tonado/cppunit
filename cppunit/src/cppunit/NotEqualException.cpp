@@ -4,25 +4,6 @@ namespace CppUnit {
 
 
 NotEqualException::NotEqualException( std::string expected,
-                                      std::string actual, 
-                                      SourceLine sourceLine ,
-                                      std::string additionalMessage ) :
-    Exception( "Expected: " + expected + 
-                   ", but was: " + actual + 
-                   "." + additionalMessage ,
-               sourceLine),
-    m_expected( expected ),
-    m_actual( actual ),
-    m_additionalMessage( additionalMessage )
-{
-}
-
-
-#ifdef CPPUNIT_ENABLE_SOURCELINE_DEPRECATED
-/*!
- * \deprecated Use other constructor instead.
- */
-NotEqualException::NotEqualException( std::string expected,
                                       std::string actual,
                                       long lineNumber, 
                                       std::string fileName ) : 
@@ -33,14 +14,12 @@ NotEqualException::NotEqualException( std::string expected,
     m_actual( actual )
 {
 }
-#endif
 
 
 NotEqualException::NotEqualException( const NotEqualException &other ) : 
     Exception( other ),
     m_expected( other.m_expected ),
-    m_actual( other.m_actual ),
-    m_additionalMessage( other.m_additionalMessage )
+    m_actual( other.m_actual )
 {
 }
 
@@ -59,7 +38,6 @@ NotEqualException::operator =( const NotEqualException &other )
   {
     m_expected = other.m_expected;
     m_actual = other.m_actual;
-    m_additionalMessage = other.m_additionalMessage;
   }
   return *this;
 }
@@ -98,13 +76,6 @@ std::string
 NotEqualException::actualValue() const
 {
   return m_actual;
-}
-
-
-std::string 
-NotEqualException::additionalMessage() const
-{
-  return m_additionalMessage;
 }
 
 
