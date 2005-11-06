@@ -31,12 +31,8 @@
 #endif
 
 /* define if the compiler supports Run-Time Type Identification */
-#ifndef CPPUNIT_HAVE_RTTI
-# ifdef _CPPRTTI // Defined by the compiler option /GR
-#  define CPPUNIT_HAVE_RTTI 1
-# else
-#  define CPPUNIT_HAVE_RTTI 0
-# endif
+#ifndef CPPUNIT_HAVE_RTTI 
+#define CPPUNIT_HAVE_RTTI  1 
 #endif
 
 /* Define to 1 to use type_info::name() for class names */
@@ -60,10 +56,6 @@
 #else
 # define CPPUNIT_COMPILER_LOCATION_FORMAT "%p(%l):"
 #endif
-
-// Define to 1 if the compiler support C++ style cast.
-#define CPPUNIT_HAVE_CPP_CAST 1
-
 
 // Uncomment to turn on STL wrapping => use this to test compilation. 
 // This will make CppUnit subclass std::vector & co to provide default

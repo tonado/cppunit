@@ -1,4 +1,3 @@
-#include <cppunit/config/SourcePrefix.h>
 #include <cppunit/tools/XmlDocument.h>
 #include <cppunit/tools/XmlElement.h>
 

@@ -5,7 +5,7 @@
 #include <cppunit/Exception.h>
 #include <cppunit/Asserter.h>
 #include <cppunit/portability/Stream.h>
-#include <stdio.h>
+
 #include <float.h> // For struct assertion_traits<double>
 
 
@@ -76,11 +76,7 @@ struct assertion_traits<double>
        const int precision = 15;
 #endif  // #ifdef DBL_DIG
        char buffer[128];
-#ifdef __STDC_SECURE_LIB__ // Use secure version with visual studio 2005 to avoid warning.
-       sprintf_s(buffer, sizeof(buffer), "%.*g", precision, x); 
-#else	
        sprintf(buffer, "%.*g", precision, x); 
-#endif
        return buffer;
     }
 };

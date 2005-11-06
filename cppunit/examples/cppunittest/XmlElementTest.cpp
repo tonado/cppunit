@@ -1,4 +1,3 @@
-#include <cppunit/config/SourcePrefix.h>
 #include <cppunit/tools/XmlElement.h>
 #include "ToolsSuite.h"
 #include "XmlElementTest.h"

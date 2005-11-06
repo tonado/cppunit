@@ -1,4 +1,3 @@
-#include <cppunit/config/SourcePrefix.h>
 #include "SubclassedTestCase.h"
 
 

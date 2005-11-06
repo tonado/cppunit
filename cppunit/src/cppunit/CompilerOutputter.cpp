@@ -1,4 +1,3 @@
-#include <cppunit/config/SourcePrefix.h>
 #include <cppunit/Exception.h>
 #include <cppunit/SourceLine.h>
 #include <cppunit/TestFailure.h>

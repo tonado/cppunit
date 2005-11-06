@@ -4,7 +4,6 @@
 // Created: 2002/06/14
 // //////////////////////////////////////////////////////////////////////////
 #include "ClockerModel.h"
-#include <cppunit/config/SourcePrefix.h>
 
 
 ClockerModel::ClockerModel()

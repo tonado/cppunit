@@ -1,4 +1,3 @@
-#include <cppunit/config/SourcePrefix.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include "CoreSuite.h"
 #include "HelperSuite.h"

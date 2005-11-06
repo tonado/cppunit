@@ -1,4 +1,4 @@
-  New in CppUnit 1.11.4:
+  New in CppUnit 1.11.0:
   ----------------------
 
 
@@ -71,8 +71,6 @@
 		AM_PATH_CPPUNIT(1.9)
 		instead of
 		AM_PATH_CPPUNIT(1.9.0)"
-		
-  - Visual Studio 2005: removed deprecated warning.
 
 * Documentation:
 

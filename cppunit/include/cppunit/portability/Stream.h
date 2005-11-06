@@ -7,8 +7,6 @@
 // Functions stdCOut() & stdCErr() which returns a reference on cout & cerr stream (or our
 // custom stream).
 
-#include <cppunit/Portability.h>
-
 
 #if defined( CPPUNIT_NO_STREAM )
 
@@ -94,7 +92,6 @@ public:
 
    virtual ~OStream()
    {
-     flush();
    }
 
    OStream &flush()
@@ -172,21 +169,21 @@ public:
    OStream &operator <<( float v )
    {
       char buffer[128];
-      sprintf( buffer, "%.16g", double(v) );
+      sprintf( buffer, "%f", double(v) );
       return write( buffer );
    }
 
    OStream &operator <<( double v )
    {
       char buffer[128];
-      sprintf( buffer, "%.16g", v );
+      sprintf( buffer, "%f", v );
       return write( buffer );
    }
 
    OStream &operator <<( long double v )
    {
       char buffer[128];
-      sprintf( buffer, "%.16g", double(v) );
+      sprintf( buffer, "%f", double(v) );
       return write( buffer );
    }
 

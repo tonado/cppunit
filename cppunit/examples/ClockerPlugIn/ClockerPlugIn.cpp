@@ -1,4 +1,3 @@
-#include <cppunit/config/SourcePrefix.h>  // disabled unwanted warning on vc++ 6.0
 #include <cppunit/TestResult.h>
 #include <cppunit/XmlOutputter.h>
 #include <cppunit/plugin/TestPlugIn.h>
@@ -75,4 +74,4 @@ private:
 
 CPPUNIT_PLUGIN_EXPORTED_FUNCTION_IMPL( ClockerPlugIn );
 
-CPPUNIT_PLUGIN_IMPLEMENT_MAIN();
+CPPUNIT_TESTPLUGIN_MAIN();
