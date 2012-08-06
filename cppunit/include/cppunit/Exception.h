@@ -6,10 +6,6 @@
 #include <cppunit/SourceLine.h>
 #include <exception>
 
-#if CPPUNIT_NEED_DLL_DECL
-#pragma warning( push )
-#pragma warning( disable: 4251 )  // X needs to have dll-interface to be used by clients of class Z
-#endif 
 
 CPPUNIT_NS_BEGIN
 
@@ -53,7 +49,7 @@ public:
   /// Returns descriptive message
   const char *what() const throw();
 
-  /// Location where the error occurred
+  /// Location where the error occured
   SourceLine sourceLine() const;
 
   /// Message related to the exception.
@@ -89,9 +85,6 @@ protected:
 
 CPPUNIT_NS_END
 
-#if CPPUNIT_NEED_DLL_DECL
-#pragma warning(pop)
-#endif
 
 #endif // CPPUNIT_EXCEPTION_H
 
